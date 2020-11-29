@@ -1,0 +1,18 @@
+%h1 Sign Up
+= form_for User.new, class: "form-inline" do |f|
+  %label{:for => "exampleInputEmail1"} Email
+  = f.text_field :email, :required => true
+  %br/
+  %br/
+  %label{:for => "exampleInputPassword1"} Password
+  = f.password_field :password, :required => true
+  %br/
+  %br/
+  %label{:for => "exampleInputPassword1"} Confirm Password
+  = f.password_field :password_confirmation, :required => true
+  %br/
+  %br/
+  = f.label :avatar, 'Upload Avatar'
+  = f.file_field :avatar
+  %br/
+  %button.btn.btn-primary{:type => "submit"} Sign Up

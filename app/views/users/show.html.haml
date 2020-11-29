@@ -1,0 +1,32 @@
+.row.top_row
+  .col-sm-6.user_att
+    %h2= @user.email
+    - if @user.avatar_file_name
+      = image_tag @user.avatar.url(:thumb)
+  .col
+    = link_to 'Follow Users', log_out_path, class: ['btn', 'btn-primary', 'follow_btn']
+  .col
+    = link_to 'Logout', log_out_path, class: ['btn', 'btn-danger', 'logout_btn']
+  .col
+    = link_to 'Add Photo', new_user_photo_path(@user), class: ['btn', 'btn-success', 'add_photo_btn']
+
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+%br/
+
+.row
+  - @user.photos.each  do |photo|
+    .well.col-sm-4
+      %div#title= photo.title
+      = image_tag photo.image.url(:medium), :class => "uploaded_photo"
+      = form_for @tag do |f|
+        = f.hidden_field :photo_id, value: photo.id
+        = f.collection_select :user_id, @users, :id, :email
+        = f.submit "Tag User" ,:class => "tag-submit"
+      - photo.tags.each do |tag|
+        = tag.user.email

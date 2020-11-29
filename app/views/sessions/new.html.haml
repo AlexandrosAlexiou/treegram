@@ -1,0 +1,10 @@
+%h2 Log In
+= form_tag log_in_path do
+  .form-group
+  %label{:for => "exampleInputEmail1"} Email
+  = text_field_tag :email
+  .form-group
+  %label{:for => "exampleInputPassword1"} Password
+  = password_field_tag :password
+  .form-check
+  %button.btn.btn-primary{:type => "submit"} Login

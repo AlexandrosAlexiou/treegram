@@ -1,0 +1,9 @@
+%h1 Upload Photo
+= form_for Photo.new, :url => user_photos_path, :html => {:multipart => true} do |form|
+  %div Photo Title
+  = form.text_field :title, :required => true, :class => "title_input"
+  %br/
+  %br/
+  = form.file_field :image
+  %br/
+  %button.btn.btn-primary{:type => "submit"} Upload
