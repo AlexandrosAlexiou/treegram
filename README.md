@@ -45,8 +45,8 @@ docker-compose run server rake routes
 ### Create migration for photo title
 rails g migration add_title_to_photos title:string
 ### Push migration
-docker-compose run server rake db:migrate 
+docker-compose run server rake db:migrate && docker-compose run server bundle exec rake db:seed
 ### Generate new scaffold for follow system
-docker-compose run server rails g scaffold Follow follower:integer followed:integer
+docker-compose run server rails g model  Follow follower_id:integer:index  followed_id:integer:index
 ### Run seeds
 docker-compose run server bundle exec rake db:seed

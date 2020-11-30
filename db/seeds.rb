@@ -4,6 +4,7 @@
 
 users = [{:email => 'alex@alex.com', :password => 'alex'},
           {:email => 'lala@lala.com', :password => 'lala'},
+          {:email => 'k@k.com', :password => 'k'}
 ]
 
 users.each do |user|

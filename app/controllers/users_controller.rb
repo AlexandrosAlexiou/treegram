@@ -1,4 +1,10 @@
 class UsersController < ApplicationController
+
+  def index
+    @users = User.all
+    @user = User.find(session[:user_id])
+  end
+
   def create
     @user = User.new(user_params)
     @user.valid?
@@ -28,7 +34,6 @@ class UsersController < ApplicationController
   end
 
   private
-
     def user_params
       params.require(:user).permit(:email, :password, :password_confirmation, :avatar)
   end

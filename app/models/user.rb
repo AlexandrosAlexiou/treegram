@@ -1,6 +1,10 @@
 class User<ActiveRecord::Base
+
   has_many :photos
   has_many :tags
+  has_many :follows, {class_name: "Follow", foreign_key: "follower_id",dependent: :destroy}
+  has_many :followed, through: :follows
+
   attr_accessor :password
   has_attached_file :avatar, :styles => { :medium => "300x300>", :thumb => "100x100>" }
   validates_attachment_content_type :avatar, :content_type => /\Aimage\/.*\Z/
@@ -26,4 +30,9 @@ class User<ActiveRecord::Base
       nil
     end
   end
+
+  def following?(other_user)
+    followed.include?(other_user)
+  end
+
 end

@@ -10,6 +10,4 @@ class TagsController<ActionController::Base
   end
 
 
-
-
 end

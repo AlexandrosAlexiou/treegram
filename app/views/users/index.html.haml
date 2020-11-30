@@ -1,0 +1,20 @@
+= link_to 'Back', user_path(current_user), class: %w[btn btn-success add_photo_btn]
+
+%h2 All users:
+%br
+- @users.each do |user|
+  - if user != current_user
+    .row
+      - unless current_user.following?(user)
+        .well.col-sm-4
+          %strong.follower_email= user.email
+          .col
+            - if user.avatar_file_name
+              = image_tag user.avatar.url(:thumb)
+            =link_to 'Follow', new_user_follow_path(user.id), class: %w[btn btn-sm btn-primary pull-right btn-large]
+      - else
+        .well.col-sm-4
+          %strong= "You are following: "
+          %strong= user.email
+          %br/
+
