@@ -20,13 +20,16 @@
 %br/
 
 .row
-  - @user.photos.each  do |photo|
-    .well.col-sm-4
-      #title= photo.title
-      = image_tag photo.image.url(:medium), :class => "uploaded_photo"
-      = form_for @tag do |f|
-        = f.hidden_field :photo_id, value: photo.id
-        = f.collection_select :user_id, @users, :id, :email
-        = f.submit "Tag User" ,:class => "tag-submit"
-      - photo.tags.each do |tag|
-        = tag.user.email
+  - @users.each  do |user|
+    -if current_user.following?(user) or user == current_user
+      -user.photos.order(created_at: :desc).each do |photo|
+        .well.col-sm-4
+          #title= user.email
+          #title= photo.title
+          = image_tag photo.image.url(:medium), :class => "uploaded_photo"
+          = form_for @tag do |f|
+            = f.hidden_field :photo_id, value: photo.id
+            = f.collection_select :user_id, @users, :id, :email
+            = f.submit "Tag User" ,:class => "tag-submit"
+          - photo.tags.each do |tag|
+            = tag.user.email
