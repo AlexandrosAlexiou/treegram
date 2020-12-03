@@ -31,8 +31,8 @@ class User<ActiveRecord::Base
     end
   end
 
-  def following?(other_user)
-    followed.include?(other_user)
+  def following?(user)
+    followed.include?(user)
   end
 
 end

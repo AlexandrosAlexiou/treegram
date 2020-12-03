@@ -31,6 +31,8 @@ class UsersController < ApplicationController
     @users = User.all
     @user = User.find(params[:id])
     @tag = Tag.new
+    @follows = Follow.all
+    @photos = Photo.all
   end
 
   private

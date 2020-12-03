@@ -44,9 +44,11 @@ MIT license
 docker-compose run server rake routes 
 ### Create migration for photo title
 rails g migration add_title_to_photos title:string
-### Push migration
+### Push migration && run seeds
 docker-compose run server rake db:migrate && docker-compose run server bundle exec rake db:seed
-### Generate new scaffold for follow system
+### Generate model follow
 docker-compose run server rails g model  Follow follower_id:integer:index  followed_id:integer:index
 ### Run seeds
 docker-compose run server bundle exec rake db:seed
+### Generate model comment
+docker-compose run server rails g model Comment photo_id:integer user_id:integer comment:string

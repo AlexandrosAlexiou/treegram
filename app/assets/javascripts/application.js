@@ -14,3 +14,12 @@
 //= require jquery_ujs
 //= require turbolinks
 //= require_tree .
+
+// fade alert messages after 1 second
+setTimeout(function() {
+    $('.div.alert.alert-info').fadeOut('slow');
+}, 1000);
+
+setTimeout(function() {
+    $('.div.alert.alert-danger').fadeOut('slow');
+}, 2000);

@@ -21,7 +21,8 @@
 
 .row
   - @users.each  do |user|
-    -if current_user.following?(user) or user == current_user
+    -if current_user.following?(user) or user.id == current_user.id
+      -puts user.photos.class.name
       -user.photos.order(created_at: :desc).each do |photo|
         .well.col-sm-4
           #title= user.email
