@@ -2,6 +2,7 @@ class User<ActiveRecord::Base
 
   has_many :photos
   has_many :tags
+  has_many :comments
   has_many :follows, {class_name: "Follow", foreign_key: "follower_id",dependent: :destroy}
   has_many :followed, through: :follows
 

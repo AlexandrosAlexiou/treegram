@@ -34,3 +34,16 @@
             = f.submit "Tag User" ,:class => "tag-submit"
           - photo.tags.each do |tag|
             = tag.user.email
+          %br/
+          .comments Comment Section
+          %br/
+          - photo.comments.each do |comment|
+            %span#comment= comment.user.email
+            = " :"
+            %strong#comment= comment.comment
+            %br/
+          = form_for @comment do |comment|
+            = comment.text_field :comment
+            = comment.hidden_field :comment_user_id, value: @user.id
+            = comment.hidden_field :photo_id, value: photo.id
+            = comment.submit 'Add comment'

@@ -33,6 +33,7 @@ class UsersController < ApplicationController
     @tag = Tag.new
     @follows = Follow.all
     @photos = Photo.all
+    @comment = Comment.new
   end
 
   private
