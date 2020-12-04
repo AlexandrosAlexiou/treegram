@@ -34,6 +34,8 @@
       -puts user.photos.class.name
       -user.photos.order(created_at: :desc).each do |photo|
         .well.col-sm-4
+          -if user == current_user
+            = button_to 'Delete', user_photo_path(user.id, photo.id),class: "btn btn-danger", :method => :delete, :confirm => 'Are you sure?'
           #title= user.email
           #title= photo.title
           = image_tag photo.image.url(:medium), :class => "uploaded_photo"

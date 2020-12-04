@@ -1,5 +1,10 @@
 class PhotosController < ApplicationController
 
+  # def new
+  #   @user = User.find(params[:user_id])
+  #   @photo = Photo.create
+  # end
+
   def create
     @user = User.find(params[:user_id])
     if params[:photo] == nil
@@ -14,13 +19,20 @@ class PhotosController < ApplicationController
     end
   end
 
-  # def new
-  #   @user = User.find(params[:user_id])
-  #   @photo = Photo.create
-  # end
+  def destroy
+    @photo = Photo.find(params[:id])
+    @photo.destroy
+    @photo.comments.each do |comment|
+      comment.destroy
+    end
+    @photo.tags.each do |tag|
+      tag.destroy
+    end
+    flash[:notice] = "Photo '#{@photo.id}' deleted."
+    redirect_to :back
+  end
 
   private
-
   def photo_params
     params.require(:photo).permit(:image, :title)
   end
