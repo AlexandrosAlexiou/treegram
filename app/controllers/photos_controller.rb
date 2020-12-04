@@ -21,6 +21,7 @@ class PhotosController < ApplicationController
 
   def destroy
     @photo = Photo.find(params[:id])
+    photo_title = @photo.title
     @photo.destroy
     @photo.comments.each do |comment|
       comment.destroy
@@ -28,7 +29,7 @@ class PhotosController < ApplicationController
     @photo.tags.each do |tag|
       tag.destroy
     end
-    flash[:notice] = "Photo '#{@photo.id}' deleted."
+    flash[:notice] = "Photo '#{photo_title}' deleted."
     redirect_to :back
   end
 
