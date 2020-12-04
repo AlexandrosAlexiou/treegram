@@ -1,5 +1,13 @@
 %nav.navbar.treegram
-  %a.navbar-brand{:href => "/users/" + current_user.id.to_s} Home
+  %a.navbar-brand{:href => "/users/" + current_user.id.to_s}
+    %i.glyphicon.glyphicon-home
+      Home
+  %a.navbar-brand{:href => users_path }
+    %i.glyphicon.glyphicon-heart
+      Follows
+  %a.navbar-brand.navbar-right.pd{:href => log_out_path }
+    %i.glyphicon.glyphicon-log-out
+      Logout
 %h1 Upload Photo
 = form_for Photo.new, :url => user_photos_path, :html => {:multipart => true} do |form|
   %div Photo Title

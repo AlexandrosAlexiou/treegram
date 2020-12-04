@@ -1,4 +1,5 @@
 class PhotosController < ApplicationController
+
   def create
     @user = User.find(params[:user_id])
     if params[:photo] == nil

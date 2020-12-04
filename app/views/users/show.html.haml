@@ -1,15 +1,24 @@
-.row.top_row
+%nav.navbar.treegram
+  %a.navbar-brand{:href => "/users/" + current_user.id.to_s}
+    %i.glyphicon.glyphicon-home
+      Home
+  %a.navbar-brand{:href => users_path }
+    %i.glyphicon.glyphicon-heart
+      Follows
+  %a.navbar-brand{:href => new_user_photo_path(@user) }
+    %i.glyphicon.glyphicon-upload
+      Upload
+  %a.navbar-brand.navbar-right.pd{:href => log_out_path }
+    %i.glyphicon.glyphicon-log-out
+      Logout
+-# = link_to 'Follow Users', users_path, class: %w[btn btn-info follow_btn]
+-# = link_to 'Logout', log_out_path, class: %w[btn btn-danger logout_btn]
+-# = link_to 'Add Photo', new_user_photo_path(@user), class: %w[btn btn-success add_photo_btn]
+.row
   .col-sm-6.user_att
     %h2= @user.email
     - if @user.avatar_file_name
       = image_tag @user.avatar.url(:thumb)
-  .col
-    = link_to 'Follow Users', users_path, class: %w[btn btn-info follow_btn]
-  .col
-    = link_to 'Logout', log_out_path, class: %w[btn btn-danger logout_btn]
-  .col
-    = link_to 'Add Photo', new_user_photo_path(@user), class: %w[btn btn-success add_photo_btn]
-
 %br/
 %br/
 %br/

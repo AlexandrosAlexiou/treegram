@@ -1,6 +1,14 @@
 -# = link_to 'Back', user_path(current_user), class: %w[btn btn-success add_photo_btn]
 %nav.navbar.treegram
-  %a.navbar-brand{:href => "/users/" + current_user.id.to_s} Home
+  %a.navbar-brand{:href => "/users/" + current_user.id.to_s}
+    %i.glyphicon.glyphicon-home
+      Home
+  %a.navbar-brand{:href => new_user_photo_path(@user) }
+    %i.glyphicon.glyphicon-upload
+      Upload
+  %a.navbar-brand.navbar-right.pd{:href => log_out_path }
+    %i.glyphicon.glyphicon-log-out
+      Logout
 %h2 All users:
 %br
 - @users.each do |user|
