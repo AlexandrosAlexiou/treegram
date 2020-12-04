@@ -6,7 +6,7 @@
     %i.glyphicon.glyphicon-heart
       Follows
   %a.navbar-brand{:href => new_user_photo_path(@user) }
-    %i.glyphicon.glyphicon-upload
+    %i.glyphicon.glyphicon-cloud-upload
       Upload
   %a.navbar-brand.navbar-right.pd{:href => log_out_path }
     %i.glyphicon.glyphicon-log-out
@@ -46,7 +46,7 @@
           %br/
           .comments Comment Section
           %br/
-          - photo.comments.each do |comment|
+          - photo.comments.order(created_at: :desc).each do |comment|
             %span#comment= comment.user.email
             = " :"
             %strong#comment= comment.comment
