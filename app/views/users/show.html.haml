@@ -30,14 +30,14 @@
   -all_photos=[]
   - @users.each  do |user|
     -if current_user.following?(user) or user.id == current_user.id
-      -user.photos.order(created_at: :desc).each do |photo|
+      -user.photos.each do |photo|
         - all_photos << photo
-  -all_photos = all_photos.sort_by {|obj| obj.created_at}
-  -all_photos = all_photos.reverse
+  -all_photos.sort_by! {|photo| photo.created_at}
+  -all_photos.reverse!
   -all_photos.each do |photo|
     -@user = User.find(photo.user_id)
     .well.col-sm-4
-      -if photo.user_id == current_user.id
+      -if @user.id == current_user.id
         = button_to 'Delete', user_photo_path(current_user.id, photo.id),class: "btn btn-danger", :method => :delete, :confirm => 'Are you sure?'
       #title= @user.email
       #title= photo.title

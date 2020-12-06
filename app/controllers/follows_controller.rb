@@ -8,16 +8,16 @@ class FollowsController < ApplicationController
     # follower_id = session[:user_id]
     # followed_id = params[:user_id]
     @follower = User.find(session[:user_id])
-    @followed_id = User.find(params[:user_id])
-    logger.debug "Follower: #{@follower.id}, Following: #{@followed_id.id}"
-    if Follow.create({follower_id: @follower.id, followed_id: @followed_id.id})
-      flash[:notice]= "You are now following #{@followed_id.email}"
+    @followed = User.find(params[:user_id])
+    logger.debug "Follower: #{@follower.id}, Following: #{@followed.id}"
+    if Follow.create({follower_id: @follower.id, followed_id: @followed.id})
+      flash[:notice]= "You are now following #{@followed.email}"
       redirect_to users_path
     end
   end
 
   private
-  def relation_params
+  def follow_params
     params.require(:follow).permit( :follower_id, :followed_id)
   end
 

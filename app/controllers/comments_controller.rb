@@ -9,6 +9,11 @@ class CommentsController < ActionController::Base
         user_id: params[:comment][:comment_user_id],
         comment: params[:comment][:comment]
       })
+    if @comment
+      flash[:notice]= "Your comment was submitted."
+    else
+      flash[:alert]= "Error. Your comment was not submitted. Please try again."
+    end
     redirect_to user_path(session[:user_id])
   end
 end
