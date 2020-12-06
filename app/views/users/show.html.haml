@@ -1,5 +1,5 @@
 %nav.navbar.treegram
-  %a.navbar-brand{:href => "/users/" + current_user.id.to_s}
+  %a.navbar-brand{:href => user_path(current_user)}
     %i.glyphicon.glyphicon-home
       Home
   %a.navbar-brand{:href => users_path }
@@ -11,9 +11,7 @@
   %a.navbar-brand.navbar-right.pd{:href => log_out_path }
     %i.glyphicon.glyphicon-log-out
       Logout
--# = link_to 'Follow Users', users_path, class: %w[btn btn-info follow_btn]
--# = link_to 'Logout', log_out_path, class: %w[btn btn-danger logout_btn]
--# = link_to 'Add Photo', new_user_photo_path(@user), class: %w[btn btn-success add_photo_btn]
+
 .row
   .col-sm-6.user_att
     %h2= @user.email
@@ -29,32 +27,38 @@
 %br/
 
 .row
+  -all_photos=[]
   - @users.each  do |user|
     -if current_user.following?(user) or user.id == current_user.id
-      -puts user.photos.class.name
       -user.photos.order(created_at: :desc).each do |photo|
-        .well.col-sm-4
-          -if user == current_user
-            = button_to 'Delete', user_photo_path(user.id, photo.id),class: "btn btn-danger", :method => :delete, :confirm => 'Are you sure?'
-          #title= user.email
-          #title= photo.title
-          = image_tag photo.image.url(:medium), :class => "uploaded_photo"
-          = form_for @tag do |f|
-            = f.hidden_field :photo_id, value: photo.id
-            = f.collection_select :user_id, @users, :id, :email
-            = f.submit "Tag User" ,:class => "tag-submit"
-          - photo.tags.each do |tag|
-            = tag.user.email
-          %br/
-          .comments Comment Section
-          %br/
-          - photo.comments.order(created_at: :desc).each do |comment|
-            %span#comment= comment.user.email
-            = " :"
-            %strong#comment= comment.comment
-            %br/
-          = form_for @comment do |comment|
-            = comment.text_field :comment
-            = comment.hidden_field :comment_user_id, value: @user.id
-            = comment.hidden_field :photo_id, value: photo.id
-            = comment.submit 'Add comment'
+        - all_photos << photo
+  -all_photos = all_photos.sort_by {|obj| obj.created_at}
+  -all_photos = all_photos.reverse
+  -all_photos.each do |photo|
+    -@user = User.find(photo.user_id)
+    .well.col-sm-4
+      -if photo.user_id == current_user.id
+        = button_to 'Delete', user_photo_path(current_user.id, photo.id),class: "btn btn-danger", :method => :delete, :confirm => 'Are you sure?'
+      #title= @user.email
+      #title= photo.title
+      = image_tag photo.image.url(:medium), :class => "uploaded_photo"
+      = form_for @tag do |f|
+        = f.hidden_field :photo_id, value: photo.id
+        = f.collection_select :user_id, @users, :id, :email
+        = f.submit "Tag User" ,:class => "tag-submit"
+      - photo.tags.each do |tag|
+        -@tagged = User.find(tag.user_id)
+        = @tagged.email
+      %br/
+      .comments Comment Section
+      %br/
+      - photo.comments.order(created_at: :desc).each do |comment|
+        -@commenter = User.find(comment.user_id)
+        %span#comment= @commenter.email
+        %strong#comment= comment.comment
+        %br/
+      = form_for @comment do |comment|
+        = comment.text_field :comment
+        = comment.hidden_field :comment_user_id, value: current_user.id
+        = comment.hidden_field :photo_id, value: photo.id
+        = comment.submit 'Add comment'

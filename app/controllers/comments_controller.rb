@@ -1,6 +1,7 @@
 class CommentsController < ActionController::Base
 
   def create
+    puts params[:comment][:comment_user_id]
     @user = User.find(params[:comment][:comment_user_id])
     @comment = Comment.create(
       {

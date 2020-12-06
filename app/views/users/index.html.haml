@@ -9,7 +9,7 @@
   %a.navbar-brand.navbar-right.pd{:href => log_out_path }
     %i.glyphicon.glyphicon-log-out
       Logout
-%h2 All users:
+%h2 Users you can follow
 %br
 - @users.each do |user|
   - if user != current_user
