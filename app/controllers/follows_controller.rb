@@ -14,4 +14,11 @@ class FollowsController < ApplicationController
     end
   end
 
+  def destroy
+    if Follow.where(:follower_id => params[:user_id], :followed_id => params[:id]).destroy_all
+      flash[:notice]= "You have unfollowed #{User.find(params[:id]).email}"
+      redirect_to :back
+    end
+  end
+
 end

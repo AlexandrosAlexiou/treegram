@@ -1,6 +1,6 @@
 -# = link_to 'Back', user_path(current_user), class: %w[btn btn-success add_photo_btn]
 %nav.navbar.treegram
-  %a.navbar-brand{:href => "/users/" + current_user.id.to_s}
+  %a.navbar-brand{:href => user_path(current_user)}
     %i.glyphicon.glyphicon-home
       Home
   %a.navbar-brand{:href => new_user_photo_path(@user) }
@@ -9,21 +9,21 @@
   %a.navbar-brand.navbar-right.pd{:href => log_out_path }
     %i.glyphicon.glyphicon-log-out
       Logout
-%h2 Users you can follow
+
+%h2 All Users
 %br
 - @users.each do |user|
   - if user != current_user
     .row
-      - unless current_user.following?(user)
-        .well.col-sm-4
-          %strong.follower_email= user.email
-          .col
-            - if user.avatar_file_name
-              = image_tag user.avatar.url(:thumb)
+      .well.col-sm-4
+        %strong.follower_email= user.email
+        .col
+          - if user.avatar_file_name
+            = image_tag user.avatar.url(:thumb)
+          -if current_user.following?(user)
+            =link_to 'Unfollow', user_follow_path(current_user.id ,user.id),
+            class: %w[btn btn-sm btn-danger pull-right btn-large],
+            :method => :delete,
+            :confirm => 'Are you sure?'
+          -else
             =link_to 'Follow', new_user_follow_path(user.id), class: %w[btn btn-sm btn-primary pull-right btn-large]
-      - else
-        .well.col-sm-4
-          %strong= "You are following: "
-          %strong= user.email
-          %br/
-

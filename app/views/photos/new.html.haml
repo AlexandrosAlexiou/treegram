@@ -1,5 +1,5 @@
 %nav.navbar.treegram
-  %a.navbar-brand{:href => "/users/" + current_user.id.to_s}
+  %a.navbar-brand{:href => user_path(current_user)}
     %i.glyphicon.glyphicon-home
       Home
   %a.navbar-brand{:href => users_path }
