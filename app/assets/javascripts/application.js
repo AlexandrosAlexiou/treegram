@@ -17,9 +17,10 @@
 
 // fade alert messages after 1 second
 setTimeout(function() {
-    $('.div.alert.alert-info').fadeOut('slow');
+    $('.div.alert.alert-success').fadeOut('slow');
 }, 1000);
 
+// fade danger messages after 2 seconds
 setTimeout(function() {
     $('.div.alert.alert-danger').fadeOut('slow');
 }, 2000);

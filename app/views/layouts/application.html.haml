@@ -12,9 +12,9 @@
     %link{:href => "https://fonts.googleapis.com/icon?family=Material+Icons", :rel => "stylesheet"}/
   %body
     .active
-      .div{class: [flash[:alert] && 'alert', 'alert-danger']}
+      .div#footer{class: [flash[:alert] && 'alert', 'alert-danger']}
         = flash[:alert]
-      .div{class: [flash[:notice] && 'alert', 'alert-info']}
+      .div#footer{class: [flash[:notice] && 'alert', 'alert-success']}
         = flash[:notice]
     .container
       = yield
