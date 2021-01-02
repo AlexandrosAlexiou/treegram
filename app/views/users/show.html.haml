@@ -26,39 +26,63 @@
 %br/
 %br/
 
+-#.row
+-#  -all_photos=[]
+-#  - @users.each  do |user|
+-#    -if current_user.following?(user) or user.id == current_user.id
+-#      -user.photos.each do |photo|
+-#        - all_photos << photo
+-#  -all_photos.sort_by! {|photo| photo.created_at}
+-#  -all_photos.reverse!
+-#  -all_photos.each do |photo|
+-#    -@user = User.find(photo.user_id)
+-#    .well.col-sm-4
+-#      -if @user.id == current_user.id
+-#        = button_to 'Delete', user_photo_path(current_user.id, photo.id),class: "btn btn-danger", :method => :delete, :confirm => 'Are you sure?'
+-#      #title= @user.email
+-#      #title= photo.title
+-#      = image_tag photo.image.url(:medium), :class => "uploaded_photo"
+-#      = form_for @tag do |f|
+-#        = f.hidden_field :photo_id, value: photo.id
+-#        = f.collection_select :user_id, @users, :id, :email
+-#        = f.submit "Tag User" ,:class => "tag-submit"
+-#      - photo.tags.each do |tag|
+-#        -@tagged = User.find(tag.user_id)
+-#        = @tagged.email
+-#      %br/
+-#      .comments Comment Section
+-#      %br/
+-#      - photo.comments.order(created_at: :desc).each do |comment|
+-#        -@commenter = User.find(comment.user_id)
+-#        %span#comment= @commenter.email
+-#        %strong#comment= comment.comment
+-#        %br/
+-#      = form_for @comment do |comment|
+-#        = comment.text_field :comment
+-#        = comment.hidden_field :comment_user_id, value: current_user.id
+-#        = comment.hidden_field :photo_id, value: photo.id
+-#        = comment.submit 'Add comment'
+
+%h1.section My Slides
 .row
-  -all_photos=[]
-  - @users.each  do |user|
-    -if current_user.following?(user) or user.id == current_user.id
-      -user.photos.each do |photo|
-        - all_photos << photo
-  -all_photos.sort_by! {|photo| photo.created_at}
-  -all_photos.reverse!
-  -all_photos.each do |photo|
-    -@user = User.find(photo.user_id)
+  .well.col-sm-4
+    #title= @user.email
+    #title= @user.photos.first.title
+    %img#slide{alt: "", src:@user.photos.first.image.url(:medium), href: user_photo_comments_path(@user, @user.photos.first), class: "uploaded_photo"}
+    #slides
+      -@user.photos.each do |photo|
+        %img{alt: photo.title , src: photo.image.url(:medium), href: user_photo_comments_path(@user.id, photo.id) }
+
+%h1.section Follower Slides
+.row
+  -@follows.where(:follower_id => @user.id).each do |follow|
+    -photos= @photos.where(:user_id=> follow.followed_id).order(created_at: :desc)
+    -latest_photo = photos.first
+    -user = User.find(latest_photo.user_id)
     .well.col-sm-4
-      -if @user.id == current_user.id
-        = button_to 'Delete', user_photo_path(current_user.id, photo.id),class: "btn btn-danger", :method => :delete, :confirm => 'Are you sure?'
-      #title= @user.email
-      #title= photo.title
-      = image_tag photo.image.url(:medium), :class => "uploaded_photo"
-      = form_for @tag do |f|
-        = f.hidden_field :photo_id, value: photo.id
-        = f.collection_select :user_id, @users, :id, :email
-        = f.submit "Tag User" ,:class => "tag-submit"
-      - photo.tags.each do |tag|
-        -@tagged = User.find(tag.user_id)
-        = @tagged.email
-      %br/
-      .comments Comment Section
-      %br/
-      - photo.comments.order(created_at: :desc).each do |comment|
-        -@commenter = User.find(comment.user_id)
-        %span#comment= @commenter.email
-        %strong#comment= comment.comment
-        %br/
-      = form_for @comment do |comment|
-        = comment.text_field :comment
-        = comment.hidden_field :comment_user_id, value: current_user.id
-        = comment.hidden_field :photo_id, value: photo.id
-        = comment.submit 'Add comment'
+      #title= user.email
+      #title= latest_photo.title
+      %img#slide{alt: "", src: latest_photo.image.url(:medium), href: user_photo_comments_path(user, latest_photo), class: "uploaded_photo"}
+    #slides
+      - photos.each do |photo|
+        %img{alt: photo.title, src: photo.image.url(:medium),href: user_photo_comments_path(user,photo ) }
