@@ -1,13 +1,12 @@
 class CommentsController < ActionController::Base
 
   def create
-    puts params[:comment][:comment_user_id]
-    @user = User.find(params[:comment][:comment_user_id])
+    @user = User.find(params[:user_id])
     @comment = Comment.create(
       {
-        photo_id: params[:comment][:photo_id],
-        user_id: params[:comment][:comment_user_id],
-        comment: params[:comment][:comment]
+        photo_id: params[:photo_id],
+        user_id: params[:user_id],
+        comment: params[:comment][:content]
       })
     if @comment
       flash[:notice]= "Your comment was submitted."
@@ -16,4 +15,11 @@ class CommentsController < ActionController::Base
     end
     redirect_to user_path(session[:user_id])
   end
+
+  def index
+    @user = User.find(params[:user_id])
+    @photo= Photo.find(params[:photo_id])
+    render(:partial => 'comments/comments', :object =>{:photo => @photo, :user =>@user} ) if request.xhr?
+  end
+
 end
