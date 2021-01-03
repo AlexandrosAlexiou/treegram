@@ -1,20 +1,19 @@
 
 %h1 Comments for Photo #{@photo.title}
 .col
-  = link_to 'Back' , user_path(session[:user_id]), class: "btn btn-primary "
+  = link_to 'Close' , '', class: "btn btn-primary ", id: 'closeLink'
 
 -current_user = session[:user_id]
 .row.md-2
-  -@photo.comments.order(created_at: :desc).each do |c|
+  -@photo.comments.order(created_at: :desc).each do |comment|
     = "User:"
-    %strong= " #{User.find(c.user_id).email}"
-    = "wrote for photo #{@photo.title}:"
+    %strong= " #{User.find(comment.user_id).email}"
     .well.sm-2.content
       %strong
-        = c.comment
+        = comment.comment
 
 - @user =session[:user_id]
-=form_tag user_photo_comments_path(@user, @photo), :method => :post do
+=form_tag user_photo_comments_path(@user, @photo) do
   = label :comment, :content, 'Comment'
   = text_area :comment, :content
-  = submit_tag 'Add Comment'
+  = submit_tag 'Publish Comment'
