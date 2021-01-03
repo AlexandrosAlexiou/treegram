@@ -42,12 +42,13 @@
 .row
   -@follows.where(:follower_id => @user.id).each do |follow|
     -photos= @photos.where(:user_id=> follow.followed_id).order(created_at: :desc)
-    -latest_photo = photos.first
-    -user = User.find(latest_photo.user_id)
-    .well.col-sm-4
-      #title= user.email
-      #title= latest_photo.title
-      %img#slide{alt: latest_photo.title, src: latest_photo.image.url(:medium), href: user_photo_comments_path(user, latest_photo.id), class: "uploaded_photo"}
-      #slides
-        - photos.each do |photo|
-          %img{alt: photo.title, src: photo.image.url(:medium),href: user_photo_comments_path(user, photo.id ) }
+    -if photos.any?
+      -latest_photo = photos.first
+      -user = User.find(latest_photo.user_id)
+      .well.col-sm-4
+        #title= user.email
+        #title= latest_photo.title
+        %img#slide{alt: latest_photo.title, src: latest_photo.image.url(:medium), href: user_photo_comments_path(user, latest_photo.id), class: "uploaded_photo"}
+        #slides
+          - photos.each do |photo|
+            %img{alt: photo.title, src: photo.image.url(:medium),href: user_photo_comments_path(user, photo.id ) }
