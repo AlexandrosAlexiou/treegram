@@ -10,7 +10,7 @@ var commentPopup = {
             url: $(this).attr('href'),
             timeout: 5000,
             success: commentPopup.showPhotoInfo,
-            error: function(xhrObj, textStatus, exception) { alert('Error!'); }
+            error: function(xhrObj, textStatus, exception) { console.log(xhrObj); }
             // 'success' and 'error' functions will be passed 3 args
         });
         return false;

@@ -33,10 +33,10 @@
       -photos= @photos.where(:user_id => @user.id).order(created_at: :desc)
       #title= @user.email
       #title= photos.first.title
-      %img#slide{alt: photos.first.title, src:photos.first.image.url(:medium), href: user_photo_comments_path(@user, photos.first.id), class: "uploaded_photo"}
+      %img#slide{alt: photos.first.title, src:photos.first.image.url(:medium), "data-delete" => user_photo_path(@user.id, photos.first.id), href: user_photo_comments_path(@user, photos.first.id), class: "uploaded_photo"}
       #slides
         -photos.each do |photo|
-          %img{alt: photo.title , src: photo.image.url(:medium), href: user_photo_comments_path(@user.id, photo.id) }
+          %img{alt: photo.title , src: photo.image.url(:medium), href: user_photo_comments_path(@user.id, photo.id), "data-delete" => user_photo_path(@user.id, photo.id) }
 
 %h1.section Follower Slides
 .row
