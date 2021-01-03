@@ -64,14 +64,15 @@
 -#        = comment.submit 'Add comment'
 
 %h1.section My Slides
-.row
-  .well.col-sm-4
-    #title= @user.email
-    #title= @user.photos.first.title
-    %img#slide{alt: "", src:@user.photos.first.image.url(:medium), href: user_photo_comments_path(@user, @user.photos.first), class: "uploaded_photo"}
-    #slides
-      -@user.photos.each do |photo|
-        %img{alt: photo.title , src: photo.image.url(:medium), href: user_photo_comments_path(@user.id, photo.id) }
+-if @user.photos.any?
+  .row
+    .well.col-sm-4
+      #title= @user.email
+      #title= @user.photos.first.title
+      %img#slide{alt: @user.photos.first.title, src:@user.photos.first.image.url(:medium), href: user_photo_comments_path(@user, @user.photos.first), class: "uploaded_photo"}
+      #slides
+        -@user.photos.each do |photo|
+          %img{alt: photo.title , src: photo.image.url(:medium), href: user_photo_comments_path(@user.id, photo.id) }
 
 %h1.section Follower Slides
 .row
@@ -82,7 +83,7 @@
     .well.col-sm-4
       #title= user.email
       #title= latest_photo.title
-      %img#slide{alt: "", src: latest_photo.image.url(:medium), href: user_photo_comments_path(user, latest_photo), class: "uploaded_photo"}
-    #slides
-      - photos.each do |photo|
-        %img{alt: photo.title, src: photo.image.url(:medium),href: user_photo_comments_path(user,photo ) }
+      %img#slide{alt: latest_photo.title, src: latest_photo.image.url(:medium), href: user_photo_comments_path(user, latest_photo), class: "uploaded_photo"}
+      #slides
+        - photos.each do |photo|
+          %img{alt: photo.title, src: photo.image.url(:medium),href: user_photo_comments_path(user,photo ) }
