@@ -13,7 +13,6 @@ $(document).ready(function() {
                 error: function(xhrObj, textStatus, exception) { console.log(xhrObj); }
                 // 'success' and 'error' functions will be passed 3 args
             });
-            location.reload();
         });
 
     $("img").filter("#slide").hover( function() {
