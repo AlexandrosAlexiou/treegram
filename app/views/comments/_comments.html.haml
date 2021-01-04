@@ -1,19 +1,21 @@
+-if @photo.comments.any?
+  %h1 Comments for Photo #{@photo.title}
 
-%h1 Comments for Photo #{@photo.title}
-.col
-  = link_to 'Close' , '', class: "btn btn-primary ", id: 'closeLink'
-
--current_user = session[:user_id]
-.row.md-2
-  -@photo.comments.order(created_at: :desc).each do |comment|
-    = "User:"
-    %strong= " #{User.find(comment.user_id).email}"
-    .well.sm-2.content
-      %strong
-        = comment.comment
+  -current_user = session[:user_id]
+  .row.md-2
+    -@photo.comments.order(created_at: :desc).each do |comment|
+      = "User:"
+      %strong= " #{User.find(comment.user_id).email}"
+      .well.sm-2.content
+        %strong
+          = comment.comment
+-else
+  %h1= " There are no Comments for Photo: #{@photo.title}"
 
 - @user =session[:user_id]
 =form_tag user_photo_comments_path(@user, @photo) do
-  = label :comment, :content, 'Comment'
-  = text_area :comment, :content
-  = submit_tag 'Publish Comment'
+  = text_area :comment, :content, class: "comment_box"
+  = submit_tag 'Publish Comment', class: "publish_comment btn btn-primary"
+
+.col
+  = link_to 'Close' , '', class: "btn btn-primary ", id: 'closeLink'

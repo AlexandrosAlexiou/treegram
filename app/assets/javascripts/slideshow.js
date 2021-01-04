@@ -5,7 +5,7 @@ $(document).ready(function() {
 
         function(){
             //console.log($(this));
-            console.log($(this).attr('data-delete'));
+            //console.log($(this).attr('data-delete'));
             $.ajax({type: 'DELETE',
                 url: $(this).attr('data-delete'),
                 timeout: 5000,
@@ -13,6 +13,7 @@ $(document).ready(function() {
                 error: function(xhrObj, textStatus, exception) { console.log(xhrObj); }
                 // 'success' and 'error' functions will be passed 3 args
             });
+            location.reload();
         });
 
     $("img").filter("#slide").hover( function() {
@@ -26,7 +27,6 @@ $(document).ready(function() {
             image.href = $(this).attr("href");
             imageElements[index] = image;
             $(image).attr("data-delete", $(this).attr("data-delete"))
-            console.log(image);
         });
         slideshowInterval = setInterval(function () {
             first_photo.fadeOut(1000, function() {
